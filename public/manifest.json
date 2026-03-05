@@ -1,0 +1,21 @@
+{
+  "name": "VintedBoost",
+  "short_name": "VintedBoost",
+  "description": "Auto-générateur d'annonces optimisées pour Vinted",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#09B1BA",
+  "icons": [
+    {
+      "src": "/window.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/globe.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

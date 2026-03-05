@@ -14,6 +14,13 @@ pnpm dev
 bun dev
 ```
 
+To stop the server, press CTRL + C if not working try cleaning the port with the following command:
+
+```
+Stop-Process -Id (Get-NetTCPConnection -LocalPort 3000).OwningProcess -Force
+```
+
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
