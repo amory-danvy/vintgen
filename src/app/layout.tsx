@@ -14,13 +14,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "VintedBoost",
+  title: "VintGen",
   description: "Boost your Vinted sales with AI",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "VintedBoost",
+    title: "VintGen",
   },
 };
 

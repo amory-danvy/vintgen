@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Camera, Upload, Loader2, Sparkles, Copy, ExternalLink, RefreshCw, AlertCircle, Star, ChevronRight, X, Unlock } from 'lucide-react';
+import { VintGenLogo, VintGenIcon } from '../components/VintGenLogo';
 import { analyzeImage, VintedResult } from './actions/analyzeImage';
 import { SignInButton, UserButton, useUser, useAuth } from "@clerk/nextjs";
 import { useMutation } from "convex/react";
@@ -121,10 +122,7 @@ export default function Home() {
 
       {/* Header */}
       <header className="w-full p-6 flex justify-between items-center bg-white dark:bg-gray-900 sticky top-0 z-10 shadow-sm rounded-b-[2rem] transition-colors duration-300">
-        <div className="flex items-center gap-2">
-          <Sparkles className="w-6 h-6 text-vinted" />
-          <h1 className="text-xl font-bold tracking-tight text-foreground dark:text-white">VintedBoost</h1>
-        </div>
+        <VintGenLogo />
         {isSignedIn && (
           <UserButton />
         )}
@@ -133,8 +131,8 @@ export default function Home() {
       <div className="flex-1 w-full px-4 py-6 flex flex-col relative">
         {!isSignedIn && (
           <div className="flex-1 flex flex-col items-center justify-center space-y-10 animate-in fade-in zoom-in duration-500 mt-8">
-            <div className="w-24 h-24 bg-vinted/10 rounded-full flex items-center justify-center mb-4">
-              <Sparkles className="w-12 h-12 text-vinted" />
+            <div className="w-24 h-24 sm:w-28 sm:h-28 bg-vinted/10 rounded-full flex items-center justify-center mb-4 transition-transform hover:scale-105">
+              <VintGenIcon className="w-12 h-12 sm:w-14 sm:h-14 text-vinted drop-shadow-md" />
             </div>
 
             <div className="text-center space-y-4 px-2">
@@ -343,7 +341,7 @@ export default function Home() {
 
               <div className="w-full space-y-3">
                 <a href="#" className="w-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-2xl p-4 flex items-center justify-center gap-2 font-bold shadow-lg hover:scale-[1.02] active:scale-95 transition-all">
-                  <Unlock className="w-5 h-5" /> S&apos;abonner - 9,99€/mois
+                  <Unlock className="w-5 h-5" /> S&apos;abonner - 2,99€/mois
                 </a>
 
                 <button onClick={closeModalAndReset} className="w-full py-3 text-sm font-semibold text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">

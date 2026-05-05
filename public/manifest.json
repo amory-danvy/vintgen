@@ -1,6 +1,6 @@
 {
-  "name": "VintedBoost",
-  "short_name": "VintedBoost",
+  "name": "VintGen",
+  "short_name": "VintGen",
   "description": "Auto-générateur d'annonces optimisées pour Vinted",
   "start_url": "/",
   "display": "standalone",
