@@ -1,58 +1,93 @@
-# VintedBoost
+# VintGen
 
-VintedBoost est une application permettant de générer automatiquement des descriptions optimisées, titres et prix pour vos articles Vinted grâce à l'IA.
+VintGen est une application qui génère automatiquement des descriptions optimisées, titres et prix pour vos articles Vinted grâce à l'IA.
 
-## 🚀 Comment lancer le projet localement
+## 🌍 Le site est déjà en ligne !
 
-### 1. Installation
-Commencez par installer les dépendances du projet :
+Pas besoin d'installer quoi que ce soit pour utiliser l'application : **[https://vintgen.vercel.app/](https://vintgen.vercel.app/)**
+
+Le reste de ce guide explique comment lancer le projet **sur votre propre ordinateur** (par exemple pour modifier le code).
+
+---
+
+## 🚀 Lancer le projet en local
+
+### Étape 1 — Installer Node.js
+Si ce n'est pas déjà fait, installez **[Node.js](https://nodejs.org/)** (prenez la version "LTS").
+
+### Étape 2 — Récupérer le projet
+Téléchargez ou clonez ce dépôt, puis ouvrez un terminal dans le dossier du projet et lancez :
 ```bash
 npm install
 ```
+Cette commande télécharge toutes les dépendances. Patientez quelques minutes.
 
-### 2. Démarrage
-Pour faire fonctionner l'application, **deux** serveurs doivent tourner en parallèle. Vous devez donc ouvrir **deux terminaux séparés**.
+### Étape 3 — Créer le fichier `.env.local`
+À la racine du projet, créez un fichier nommé `.env.local`. Il contiendra vos clés API. Voici le modèle à copier :
 
-**Terminal 1 : Le serveur de Base de données (Convex)**
-Ce serveur s'occupe de la base de données locale.
+```env
+# Google Gemini (l'IA qui génère les descriptions)
+GEMINI_API_KEY=
+
+# Clerk (l'authentification / connexion utilisateur)
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+
+# Convex (la base de données — sera rempli automatiquement à l'étape 5)
+NEXT_PUBLIC_CONVEX_URL=
+```
+
+Les sections suivantes expliquent **où trouver chaque clé**.
+
+---
+
+## 🔑 Comment obtenir chaque clé API (gratuit)
+
+### 🟦 Clé Google Gemini (`GEMINI_API_KEY`)
+C'est l'IA qui rédige les descriptions de vos articles.
+
+1. Allez sur **[Google AI Studio](https://aistudio.google.com/apikey)**.
+2. Connectez-vous avec votre compte Google.
+3. Cliquez sur **"Create API key"**.
+4. Copiez la clé qui commence par `AIza...` et collez-la dans votre `.env.local` après `GEMINI_API_KEY=`.
+
+### 🟪 Clés Clerk (`NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` et `CLERK_SECRET_KEY`)
+Clerk gère la connexion / inscription des utilisateurs.
+
+1. Créez un compte gratuit sur **[clerk.com](https://clerk.com/)**.
+2. Cliquez sur **"Create application"**, donnez-lui un nom (ex: `VintGen`).
+3. Choisissez les méthodes de connexion souhaitées (Email, Google, etc.) puis validez.
+4. Une fois l'application créée, allez dans le menu de gauche **"API Keys"**.
+5. Vous verrez deux clés à copier dans votre `.env.local` :
+   - **Publishable key** (commence par `pk_test_...`) → `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
+   - **Secret key** (commence par `sk_test_...`) → `CLERK_SECRET_KEY`
+
+### 🟩 Convex (`NEXT_PUBLIC_CONVEX_URL`)
+Convex est la base de données du projet. **Pas besoin d'aller chercher la clé manuellement** : elle sera créée automatiquement à l'étape suivante.
+
+---
+
+## ▶️ Étape 4 — Lancer l'application
+
+Vous devez ouvrir **deux terminaux** en parallèle dans le dossier du projet.
+
+### Terminal 1 — La base de données (Convex)
 ```bash
 npx convex dev
 ```
+La première fois, l'outil vous demandera de vous connecter (un compte gratuit se crée tout seul) puis remplira automatiquement les variables `NEXT_PUBLIC_CONVEX_URL` et `CONVEX_DEPLOYMENT` dans votre `.env.local`. Laissez ce terminal tourner.
 
-**Terminal 2 : Le serveur Web (Next.js)**
-Ce serveur fait tourner l'interface de l'application.
+### Terminal 2 — Le site web (Next.js)
 ```bash
 npm run dev
 ```
 
-Une fois les deux terminaux lancés, l'application est disponible dans votre navigateur sur [http://localhost:3000](http://localhost:3000).
+Ouvrez ensuite **[http://localhost:3000](http://localhost:3000)** dans votre navigateur. C'est prêt !
 
 ---
 
-## 🌐 Comment déployer et héberger le site gratuitement
+## ❓ Problème ?
 
-Ce projet est pensé pour être hébergé **à 100% gratuitement** avec le combo Vercel (pour le front) et Convex (pour le back). Voici les étapes :
-
-### Étape 1 : Héberger le code sur GitHub
-1. Créez un dépôt sur GitHub.
-2. Poussez votre code local (ce dossier complet) sur ce dépôt GitHub (attention de ne pas publier vos vraies clés privées d'environnement publiquement).
-
-### Étape 2 : Déployer la Base de Données (Convex)
-Convex possède un hébergement cloud gratuit pour vos bases de données.
-1. Depuis votre terminal, lancez :
-   ```bash
-   npx convex deploy
-   ```
-2. Cela va pousser vos fonctions backend sur les serveurs de Convex.
-3. Allez sur votre tableau de bord [Convex Dashboard](https://dashboard.convex.dev). Vous devriez y trouver votre URL de production.
-
-### Étape 3 : Déployer le site Web (Vercel)
-Vercel est la meilleure plateforme (gratuite en version "Hobby") pour héberger des applications Next.js.
-1. Créez un compte sur [Vercel](https://vercel.com) (idéalement en vous connectant via GitHub).
-2. Cliquez sur le bouton **"Add New Project"**.
-3. Importez votre dépôt GitHub.
-4. Dans la configuration du projet, allez dans la section **"Environment Variables"**. Vous devez y copier/coller TOUTES les variables de votre `.env.local`.
-   *(Très important : remplacez l'URL locale `NEXT_PUBLIC_CONVEX_URL` par l'URL de production fournie par Convex).*
-5. Cliquez sur **Deploy**.
-
-Au bout de quelques minutes, Vercel vous donnera une vraie adresse web (ex: `vintedboost.vercel.app`) pour utiliser l'application au grand public !
+- **"command not found: npm"** → Node.js n'est pas installé (étape 1).
+- **Page blanche / erreur de connexion** → Vérifiez que les deux terminaux tournent et que toutes les clés du `.env.local` sont bien remplies.
+- **Erreur Clerk** → Assurez-vous d'avoir copié les clés du bon environnement (Development) sur le dashboard Clerk.
