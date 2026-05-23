@@ -67,9 +67,28 @@ Ne retourne absolument que le JSON parsable.`;
         };
     } catch (error: any) {
         console.error("Gemini API Error:", error);
+
+        const rawMessage: string = error?.message || "";
+        const status: number | undefined = error?.status ?? error?.response?.status;
+        const isOverloaded =
+            status === 429 ||
+            status === 503 ||
+            /\b(429|503)\b/.test(rawMessage) ||
+            /overload|RESOURCE_EXHAUSTED|quota|rate limit|Too Many Requests|Service Unavailable/i.test(
+                rawMessage
+            );
+
+        if (isOverloaded) {
+            return {
+                success: false,
+                error:
+                    "Le service d'IA Google Gemini est actuellement saturé par un trop grand nombre d'utilisateurs dans le monde. Ce n'est pas un problème de VintGen : merci de patienter quelques minutes puis de réessayer.",
+            };
+        }
+
         return {
             success: false,
-            error: error.message || "Impossible d'analyser l'image avec l'IA.",
+            error: rawMessage || "Impossible d'analyser l'image avec l'IA.",
         };
     }
 }
