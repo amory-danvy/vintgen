@@ -143,7 +143,7 @@ export default function Home() {
             <div className="w-full space-y-4 mt-8">
               <SignInButton mode="modal">
                 <button className="w-full bg-vinted hover:bg-vinted-hover text-white rounded-2xl p-4 flex items-center justify-center gap-3 font-semibold text-lg shadow-xl shadow-vinted/20 active:scale-95 transition-all">
-                  Créer un compte gratuit
+                  Se connecter ou créer un compte
                   <ChevronRight className="w-5 h-5" />
                 </button>
               </SignInButton>
